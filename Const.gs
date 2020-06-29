@@ -9,3 +9,5 @@ const FourtuneComputerSheetIT = "XXX"
 
 //Sources
 //http://fortunes.pbworks.com/w/page/14107117/FrontPage
+//Send direct to all
+//https://script.google.com/macros/s/AKfycbwFvodlF1DSOkKuI78f2B-FDEIxAeUHlEpr1Az7Z5CRMTpEsO7H/exec?text=
