@@ -43,7 +43,7 @@ return false;
 //The replyToSender method is a utility function for your convenience.
 Bot.prototype.replyToSender = function (text) {
  return this.request('sendMessage', {
-  'chat_id': this.update.message.from.id,
+  'chat_id': this.update.message.chat.id,
   'text': text
  });
 }
@@ -59,7 +59,7 @@ Bot.prototype.pushMessage = function (text, id) {
 //still under test to create a custom keyboard
 Bot.prototype.createKeyboard = function(arrayOfButtons) {
   return this.request('sendMessage', {
-    'chat_id': this.update.message.from.id,
+    'chat_id': this.update.message.chat.id,
     'text': "Quale?" , 
     'reply_markup' : { 
       'keyboard' : [ ["Test1"] ,  ["Test2"] ],
@@ -70,7 +70,7 @@ Bot.prototype.createKeyboard = function(arrayOfButtons) {
 //still under test to delete a custom keyboard
 Bot.prototype.destroyKeyboard = function() {
   return this.request('sendMessage', {
-    'chat_id': this.update.message.from.id,
+    'chat_id': this.update.message.chat.id,
     'text': "OK!" , 
     'reply_markup' : { 
       'remove_keyboard' : true
