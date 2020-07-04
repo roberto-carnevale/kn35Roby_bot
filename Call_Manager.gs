@@ -16,9 +16,14 @@ function doPost(e) {
   
     //Mnages "/start" command
     bus.on(/\/start/, function () {
-      this.replyToSender("Ciao " + bot.update.message.from.first_name);
-      spread.writeSubscriber(bot.update.message.from.id, bot.update.message.from.first_name, bot.update.message.from.last_name);
-      bot.pushMessage("Nuovo START: " + (bot.update.message.from.id).toString() + ">" + bot.update.message.from.first_name + " " +  bot.update.message.from.last_name, 689085244);
+      if (bot.update.message.from.id == bot.update.message.chat.id) {
+        this.replyToSender("Ciao " + bot.update.message.from.first_name);
+        spread.writeSubscriber(bot.update.message.from.id, bot.update.message.from.first_name, bot.update.message.from.last_name);
+        bot.pushMessage("Nuovo START: " + (bot.update.message.from.id).toString() + ">" + bot.update.message.from.first_name + " " +  bot.update.message.from.last_name, 689085244);
+      } else {
+        bot.pushMessage("Ciao a tutti e grazie di avermi aggiunto alla chat " + bot.update.message.chat.title, bot.update.message.chat.id);
+        spread.writeSubscriber(bot.update.message.chat.id, bot.update.message.chat.title, "*GROUP*");
+      }
     });
     
     //Mnages "/start" command
@@ -28,22 +33,23 @@ function doPost(e) {
       bot.pushMessage("STOP: " + (bot.update.message.from.id).toString() + ">" + bot.update.message.from.first_name + " " +  bot.update.message.from.last_name, 689085244);
     });
     
-    //Mnages "/start" command
+    //Mnages "/fortune" command
     bus.on(/\/fortune/, function () {
       if (spread.getSubscriber(bot.update.message.from.id) == -1) {this.replyToSender("Ciao "+ bot.update.message.from.first_name + " devi prima dare il comando /start ");}
       else {
         var fortuneObj = new FortuneOnGoogle();
-        var rangeSelected = fortuneObj.selectRange(bot.update.message.from.id)
+        var rangeSelected = fortuneObj.selectRange(bot.update.message.chat.id)
         var fortuneSentence= fortuneObj.dataRetrieval(rangeSelected);
         this.replyToSender(fortuneSentence);
       }
     });
     
+    
     //Mnages "/change" command
     bus.on(/\/change/, function () {
-      if (spread.getSubscriber(bot.update.message.from.id) == -1) {this.replyToSender("Ciao "+ bot.update.message.from.first_name + " devi prima dare il comando /start ");}
+      if (spread.getSubscriber(bot.update.message.chat.id) == -1) {this.replyToSender("Ciao "+ bot.update.message.from.first_name + " devi prima dare il comando /start ");}
       else {
-        var newDBName = spread.newDB(bot.update.message.from.id)
+        var newDBName = spread.newDB(bot.update.message.chat.id)
         this.replyToSender("Nuovo vassoio dei dolcetti: " + newDBName);
       }
     });    
@@ -89,8 +95,8 @@ function doRunFortuneForSubscribers() {
       }
     }
   }
-  var bot = new Bot(token, {});
-  bot.pushMessage("seed:"+seedH+"- h:"+h, 689085244);
+ // var bot = new Bot(token, {});
+  //bot.pushMessage("seed:"+seedH+"- h:"+h, 689085244);
 }
 
 function doGet(e) {
