@@ -54,6 +54,27 @@ function doPost(e) {
       }
     });    
     
+    //Mnages "/suspend" draw cookies command
+    bus.on(/\/suspend/, function () {
+      var line_id = spread.getSubscriber(bot.update.message.chat.id);
+      bot.pushMessage(bot.update.message.chat.id + " ha sospeso", 689085244);
+      if (line_id > -1) { 
+        spread.setDrawStatus(line_id, "N");
+        bot.pushMessage("Ora sei a dieta!", parseInt(bot.update.message.chat.id));
+      }
+      
+    });
+    
+    //Mnages "/resume" draw cookies command
+    bus.on(/\/resume/, function () {
+      var line_id = spread.getSubscriber(bot.update.message.chat.id);
+      bot.pushMessage(bot.update.message.chat.id + " ha ripreso", 689085244);
+      if (line_id > -1) { 
+        spread.setDrawStatus(line_id, "Y"); 
+        bot.pushMessage("Buon divertimento! A presto!", parseInt(bot.update.message.chat.id));
+      }
+    });   
+    
     
     //Mnages "/testY" command
     bus.on(/\/testY/, function () {
@@ -79,19 +100,24 @@ function doRunFortuneForSubscribers() {
   var d = new Date();
   var h = d.getUTCHours();
   const seedH = parseInt(Math.random()*10);
-  if (h > 6 && h<21 && seedH >= 8) {
+  if (h > 6 && h<18 && seedH >= 8) {
     var fortuneObj = new FortuneOnGoogle();
     var range = fortuneObj.selectRangeFromTab(fortuneObj.selectDraw());
     var text = fortuneObj.dataRetrieval(range);
     var spread = new SpreadData();
-    //creates the bot
+    
+    //creates the bot and the fortuneObj
     var bot = new Bot(token, {});
-
-    //sends to all subscribers
-    for (id of spread.listSubscribers()) {
+    var fortuneObj = new FortuneOnGoogle();
+    
+    //sends to subscribers who accepts draws
+    for (var id of spread.listSubscribers()) {
       if (!isNaN(parseInt(id))) {
+        //gets the range    
+        var rangeSelected = fortuneObj.selectRange(id)
+        var fortuneSentence= fortuneObj.dataRetrieval(rangeSelected);
         //pushes the message
-        bot.pushMessage(text, parseInt(id));
+        bot.pushMessage(fortuneSentence, parseInt(id));
       }
     }
   }
@@ -109,7 +135,7 @@ function doGet(e) {
     var spread = new SpreadData();
     
     var countMessages = 0;
-    for (id of spread.listSubscribers()) {
+    for (id of spread.listAllSubscribers()) {
       if (!isNaN(parseInt(id))) {
         countMessages++;
       }
@@ -120,7 +146,7 @@ function doGet(e) {
     template.num = countMessages;
     template.text = e.parameter["text"];
     
-    for (id of spread.listSubscribers()) {
+    for (id of spread.listAllSubscribers()) {
       if (!isNaN(parseInt(id))) {
         //pushes the message
         bot.pushMessage(template.text, parseInt(id));
