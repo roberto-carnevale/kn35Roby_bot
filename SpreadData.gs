@@ -39,6 +39,8 @@ SpreadData.prototype.writeSubscriber = function(value, name, surname){
     tab.getRange(rangeString).setValue(surname);
     rangeString = "D" + lastRowString;
     tab.getRange(rangeString).setValue("computer-it");
+    rangeString = "E" + lastRowString;
+    tab.getRange(rangeString).setValue("Y");
   }
 }
 
@@ -55,7 +57,7 @@ SpreadData.prototype.deleteSubscriber = function(value){
 }
 
 //lists all subscribers
-SpreadData.prototype.listSubscribers = function () {
+SpreadData.prototype.listAllSubscribers = function () {
   //Catches the tab of the subscripers  
   var tab = this.spread.getSheetByName("Subscribers");
   var lastRowString= (tab.getLastRow()+1).toString();
@@ -64,6 +66,33 @@ SpreadData.prototype.listSubscribers = function () {
   
   return tab.getRange(rangeString).getValues();
 
+}
+
+//lists all subcribers that allow drawing
+SpreadData.prototype.listSubscribers = function () {
+  //Catches the tab of the subscripers  
+  var tab = this.spread.getSheetByName("Subscribers");
+  var lastRowString= (tab.getLastRow()+1).toString();
+  //search if already registered
+  var rangeString = "A1:E" + lastRowString;
+  var data = tab.getRange(rangeString).getValues();
+  
+  var dataToReturn = []
+  
+  for (id in data) {
+    if (data[id][4] == "Y") {
+      dataToReturn.push(data[id][0]);
+    }
+  }
+  return dataToReturn;
+}
+
+//find a subscriber data
+SpreadData.prototype.setDrawStatus = function(id_line, set){
+  if (id_line > -1) {
+    var rangeString = "E" + id_line.toString();
+    this.spread.getSheetByName("Subscribers").getRange(rangeString).setValue(set);
+  }
 }
 
 //find a subscriber data
@@ -87,7 +116,8 @@ SpreadData.prototype.findSubscriber = function(id){
     result["surname"] = tab.getRange(rangeString).getValue();
     rangeString = "D" + id_line.toString();
     result["fortune"] = tab.getRange(rangeString).getValue();
-    
+    rangeString = "E" + id_line.toString();
+    result["updates"] = tab.getRange(rangeString).getValue();    
   }
   return result;
 }
