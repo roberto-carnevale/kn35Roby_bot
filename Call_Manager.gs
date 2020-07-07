@@ -35,7 +35,7 @@ function doPost(e) {
     
     //Mnages "/fortune" command
     bus.on(/\/fortune/, function () {
-      if (spread.getSubscriber(bot.update.message.from.id) == -1) {this.replyToSender("Ciao "+ bot.update.message.from.first_name + " devi prima dare il comando /start ");}
+      if (spread.getSubscriber(bot.update.message.chat.id) == -1) {this.replyToSender("Ciao "+ bot.update.message.from.first_name + " devi prima dare il comando /start ");}
       else {
         var fortuneObj = new FortuneOnGoogle();
         var rangeSelected = fortuneObj.selectRange(bot.update.message.chat.id)
