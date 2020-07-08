@@ -1,5 +1,3 @@
-In this release we have a fully functional bot to send and dispatch ancient Debian/Linux Fortune Cookies in a telegram fashionable way!
-
 # Fortune cookie Italia (aka kn35Roby_bot)
 Questo repository raccoglie tutto il codice per far funzionare il bot "Fortune cookie Italia": una versione "moderna" dell'antico comando <code>fortune</code> di Debian/Linux.
 
