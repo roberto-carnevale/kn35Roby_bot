@@ -1,5 +1,9 @@
+In this release we have a fully functional bot to send and dispatch ancient Debian/Linux Fortune Cookies in a telegram fashionable way!
+
 # Fortune cookie Italia (aka kn35Roby_bot)
-Questo repository raccoglie tutto il codice per far funzionare il bot "Fortune cookie Italia". L'ID del bot è **kn35Roby_bot** e se vi state domandando perchè... è la storpiatura ti [H-7-25](https://it.wikipedia.org/wiki/Uno_sceriffo_extraterrestre..._poco_extra_e_molto_terrestre).
+Questo repository raccoglie tutto il codice per far funzionare il bot "Fortune cookie Italia": una versione "moderna" dell'antico comando <code>fortune</code> di Debian/Linux.
+
+L'ID del bot è **kn35Roby_bot** e se vi state domandando perchè... è la storpiatura ti [H-7-25](https://it.wikipedia.org/wiki/Uno_sceriffo_extraterrestre..._poco_extra_e_molto_terrestre).
 
 Il bot risponde ai comandi riportati nel file [bot comands string.txt](https://github.com/roberto-carnevale/kn35Roby_bot/blob/master/bot%20comands%20string.txt).
 La logica del bot è semplicissima. 4 classi di base:
