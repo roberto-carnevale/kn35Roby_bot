@@ -8,9 +8,9 @@ La logica del bot è semplicissima. 4 classi di base:
 * FortuneOnGoogle
 * SpreadData
 
-##Le classi
-
+## Le classi
 Ognuna delle classi si occupa di un task specifico, come da buone pratiche:
+
 ### Bot
 La classe è il cuore del bot: iinvia i messaggi, crea e distrugge le tastiere e accoda gli update che vengono dalla piattaforma di Telegram
 
