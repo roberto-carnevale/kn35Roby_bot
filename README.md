@@ -1,7 +1,9 @@
 # Fortune cookie Italia (aka kn35Roby_bot)
 Questo repository raccoglie tutto il codice per far funzionare il bot "Fortune cookie Italia". L'ID del bot è **kn35Roby_bot** e se vi state domandando perchè... è la storpiatura ti [H-7-25](https://it.wikipedia.org/wiki/Uno_sceriffo_extraterrestre..._poco_extra_e_molto_terrestre).
+
 Il bot risponde ai comandi riportati nel file [bot comands string.txt](https://github.com/roberto-carnevale/kn35Roby_bot/blob/master/bot%20comands%20string.txt).
 La logica del bot è semplicissima. 4 classi di base:
+
 * Bot
 * CommandBus
 * FortuneOnGoogle
@@ -53,7 +55,9 @@ Questi due file hanno compiti specifici
 ### CallManager
 Gestisce le chiamate GET e POST per il sevizio.
 Nella chiamata **doPost** sono gestiti i comandi e le chiamate alle classi worker.
+
 Nella chiamata **doGet** è gestito l'invio di messagi a tutti gli utenti e i gruppi sottoscritti per l'invio di news. La risposta al browser invoca i file 200.html e 500.html per inviare un feedback al chiamante del messaggio di broadcast.
+
 La chiamata **doRunFortuneForSubscribers** è attivata dalla piattaforma Google ogni 2 ore e gestisce attraverso un random seed l'invio casuale tra le 8 e le 20 CEST una frase casuale.
 
 ### RegisterWebHook
@@ -63,7 +67,8 @@ Ci sono 3 funzioni che possono essere invocate per gestire (attraverso il token 
 Il sistema funziona secondo principalmente 3 meccanismi.
 
 ### Risposta ad un comando
-Il sistema funziona in maniera piuttosto seplice:
+Il sistema funziona in maniera piuttosto semplice:
+
 1. Telgram riceve la richiesta dall'utente di retrocedere ad un bot un comando
 2. Telegram invoca la WebHook registrata dalla funzione RegisterWebHook->setWebhook()
 3. La funzione CallManager->doPost() riceve la richiesta e processa i dati nella sezione post
@@ -72,7 +77,8 @@ Il sistema funziona in maniera piuttosto seplice:
 6. La classe Bot impacchetta la risposta assieme al token criptato e la renvia sotto forma di WebHook a "https://api.telegram.org/bot' + __SECRET_TOKEN__ + '/' + method" con i dati necessari nel POST
 
 ### Richiesta di una pagina in GET
-Questo meccanismo, per ora, invia un messagio broadcast
+Questo meccanismo, per ora, invia un messagio broadcast:
+
 1. Lo script riceve un comando attraverso la richiesta di una pagina HTTP GET
 2. La funzione estrae i dati dalla GET
 3. Le classi di backend creano una appropriata richiesta di invio messaggio
@@ -85,9 +91,13 @@ Da ultimo questo viene usato per la classe **RegisterWebHook** per impostare il 
 Oltre alla tab **setup** di cui abbiamo già discusso, ogni altra tab contiene le frasi.
 Il sistema legge le prime 3 colonne.
 Se una cella è vuota la trasforma i 5 spazi.
+
 Ogni gruppo di frasi è divisa da una riga in cui la sola casella della colonna A contiene il carattere **%**. Questo permette di importare i DB di fortune senza alcuna fatica con un banale copia/incolla.
+
 L'ultima riga di ogni tab deve contenere il carattere **%**
 La prima frase parte dalla riga 1.
+
 Se rispettate queste regole l'aggiunta di una nuova tab (vassoio, come chiamato dal bot) è immediato aggiungendo nella tab **setup** la riga appropriata
+
 #### Caveat
 Ad oggi gestisce al massimo 8 DB, al raggiunto del 9 DB va modificato il codice per estrarre 2 digit dalla casella **A1** del tab **setup**
