@@ -1,0 +1,6 @@
+start - Iniziamo
+fortune - Prendo un dolcetto :cookie: 
+change - Cambia Vassoio dei dolcetti :gift:
+suspend - Basta dolcetti, le prendo io :no_mouth:  
+resume - Mandami qualche dolcetto, ogni tanto! :heart_eyes_cat: 
+stop - Addio! :sob:
