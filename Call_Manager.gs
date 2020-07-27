@@ -4,7 +4,6 @@ function doPost(e) {
  
     // Parse the update sent from Telegram
     var update = JSON.parse(e.postData.contents);// Instantiate the bot passing the update 
-    Logger.log(update);
     
     //creates the bot
     var bot = new Bot(token, update);
@@ -117,7 +116,12 @@ function doRunFortuneForSubscribers() {
         var rangeSelected = fortuneObj.selectRange(id)
         var fortuneSentence= fortuneObj.dataRetrieval(rangeSelected);
         //pushes the message
-        bot.pushMessage(fortuneSentence, parseInt(id));
+        try {
+          bot.pushMessage(fortuneSentence, parseInt(id));
+        } catch (err) {
+          bot.pushMessage("Eccezione sul messaggio: " + id.toString(), 689085244);
+          bot.pushMessage(err.toString(), 689085244);
+        }
       }
     }
   }
@@ -149,7 +153,12 @@ function doGet(e) {
     for (id of spread.listAllSubscribers()) {
       if (!isNaN(parseInt(id))) {
         //pushes the message
-        bot.pushMessage(template.text, parseInt(id));
+        try {
+          bot.pushMessage(template.text, parseInt(id));
+        } catch (err) {
+          bot.pushMessage("Eccezione sul messaggio: " + id.toString(), 689085244);
+          bot.pushMessage(err.toString(), 689085244);
+        }
       }
     }
   }
