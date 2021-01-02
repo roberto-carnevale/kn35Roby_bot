@@ -1,5 +1,5 @@
 function SpreadData() {
-  this.spread = SpreadsheetApp.openById(spreadsheetdata);
+  this.spread = SpreadsheetApp.openById(SubscriberSpreadsheet);
 }
 
 //gets subscriber line number (-1 if not found)
@@ -139,3 +139,26 @@ SpreadData.prototype.newDB = function(id){
   tab.getRange(rangeString).setValue(nextName);
   return nextName;
 }
+
+//####TASTIERA####
+
+//changes the current DB of a subscriber with the following one
+SpreadData.prototype.newTray = function(id, newtray){
+  let fdb = new FortuneOnGoogle();
+  let tray_array = fdb.listTrays();
+  if (tray_array.includes(newtray)) {  
+    var tab = this.spread.getSheetByName("Subscribers");
+    var lastRowString= (tab.getLastRow()+1).toString();
+    var rangeString = "A1:A" + lastRowString;
+    
+    //search for a subscriber line
+    var id_line=this.getSubscriber(id);
+    //Gets the fortune obj
+    var fortuneObj = new FortuneOnGoogle();
+    
+    rangeString = "D" + id_line.toString();
+    tab.getRange(rangeString).setValue(newtray);
+    return true;
+  } else {return false;}
+}
+//####TASTIERA####
