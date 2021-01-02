@@ -55,25 +55,27 @@ Bot.prototype.pushMessage = function (text, id) {
     'text' : text,
   });
 }
-
+//######TASTIERA####
 //still under test to create a custom keyboard
 Bot.prototype.createKeyboard = function(arrayOfButtons) {
   return this.request('sendMessage', {
     'chat_id': this.update.message.chat.id,
-    'text': "Quale?" , 
+    'text': "Quale vassoio scegli?" , 
     'reply_markup' : { 
-      'keyboard' : [ ["Test1"] ,  ["Test2"] ],
-      'resize_keyboard' : true
+      'keyboard' : arrayOfButtons,
+      'one_time_keyboard': true
     }
   });
 }
+
 //still under test to delete a custom keyboard
 Bot.prototype.destroyKeyboard = function() {
   return this.request('sendMessage', {
     'chat_id': this.update.message.chat.id,
-    'text': "OK!" , 
+    'text': "Rimossa la scelta dei vassoi" , 
     'reply_markup' : { 
       'remove_keyboard' : true
     }
   });
+//#######TASTIERA#####
 }
